@@ -1,15 +1,13 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import LoginPage from "./src/page/login";
-import ErrorPage from "./src/page/error";
-// 2.2 login screen
-// 2.16 chat room screen
+import LoginScreen from "./src/screens/LoginScreen";
+import ChatRoomScreen from "./src/screens/ChatRoomScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
 
 const MainNavigator = createStackNavigator({
-    LoginPage : { screen : LoginPage},
-    ErrorPage : { screen : ErrorPage}
-// 2.3 login screen
-// 2.17 chat room screen
+    LoginScreen: { screen: LoginScreen },
+    ChatRoom: { screen: ChatRoomScreen },
+    Register: { screen: RegisterScreen },
 });
 
 const App = createAppContainer(MainNavigator);
