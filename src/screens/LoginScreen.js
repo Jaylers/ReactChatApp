@@ -3,48 +3,50 @@ import { View, Image, Text, StyleSheet, Button, TextInput } from 'react-native'
 import Container from '../components/Container'
 import login from '../libs/firebase/login'
 import onAuthStateChanged from '../libs/firebase/onAuthStateChanged'
-import styles from "./../../assets/style/loginStyle"
+import styles from '../styles/layout'
+import { pushNotificationToken } from '../libs/notification'
+import setDatabase from "../libs/firebase/setDatabase";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
-        header: null, //set this to null for block it to cannot open another page
+        header: null,
     };
 
     state = {
-        authLoading: true,
+        authLoading: false,
         loading: false,
         email: '',
         password: '',
     };
 
-    login = () => {
+    login= async () => {
+        const token = await pushNotificationToken();
+        this.setState({ loading: true });
         const { email, password } = this.state;
         if (email && password){
-            this.setState({ loading: true });
             login(email, password)
                 .then((data) => {
+                    console.log("loged in");
+                    setDatabase('users/' + data.uid + '/pushToken', token);
                     this.props.navigation.replace('ChatRoom')
                 })
-                .catch((err) => {
-                    alert("Invalid Username or password");
+                .catch(() => {
+                    alert('Invalid username or password');
                     this.setState({ loading: false })
                 })
         } else {
-            alert("Username and password is required");
+            alert('Required username and password');
         }
-
     };
 
-    //like onStart
     componentDidMount = async () => {
         this.setState({ authLoading: true });
         onAuthStateChanged()
-            .then((user) => {
-                if (user) {
-                    this.props.navigation.replace('ChatRoom')
-                } else {
-                    this.setState({ authLoading: false })
-                }
+            .then(() => {
+                this.props.navigation.replace('ChatRoom')
+            })
+            .catch(() => {
+                this.setState({ authLoading: false })
             })
     };
 
@@ -55,30 +57,21 @@ class LoginScreen extends React.Component {
                     <Image source={require('../../assets/logo.png')} />
                     <Text style={styles.text}>Chat app</Text>
                     <TextInput
-                        style={styles.input}
                         autoCapitalize='none'
+                        style={styles.input}
                         value={this.state.email}
-                        disable={this.state.loading}
-                        placeholder="Email"
                         onChangeText={(email) => this.setState({ email })}
                     />
                     <TextInput
                         style={styles.input}
-                        autoCapitalize='none'
                         value={this.state.password}
                         onChangeText={(password) => this.setState({ password })}
-                        disable={this.state.loading}
-                        placeholder="Password"
                         secureTextEntry />
                     {this.state.loading ? <Text>Loading...</Text> :
                         <View style={styles.buttonLayout} >
-                            <Button title="Login"
-                                    style={styles.buttonCute}
-                                    onPress={this.login} />
+                            <Button title="Login" onPress={this.login} style={styles.buttonCute}/>
                             <View style={{ width: 10 }} />
-                            <Button title="Register"
-                                    style={styles.buttonCute}
-                                    onPress={() => { this.props.navigation.navigate('Register') }}  />
+                            <Button title="Register" style={styles.buttonCute} onPress={() => { this.props.navigation.navigate('Register') }} />
                         </View>
                     }
                 </View>

@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     container: {
@@ -24,10 +24,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
-
     buttonCute : {
         borderRadius: 25,
         minWidth : 100,
         width : 55
     }
-});
+})

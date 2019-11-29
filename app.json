@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "chatapp",
+    "name": "CNX Chat",
     "slug": "chat-app",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/igg-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jaylers.cnxchat"
+    },
+    "android": {
+      "package": "com.jaylers.cnxchat",
+      "versionCode": 1
     }
   }
 }
