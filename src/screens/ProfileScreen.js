@@ -8,6 +8,8 @@ import setDatabase from '../libs/firebase/setDatabase'
 import { Ionicons } from '@expo/vector-icons'
 import logout from "../libs/firebase/logout";
 import getClient from "../libs/firebase/getClient";
+import getDatabase from "../libs/firebase/getDatabase";
+import getFirebaseClient from '../libs/firebase/getClient'
 
 class ProfileScreen extends React.Component {
 
@@ -42,10 +44,21 @@ class ProfileScreen extends React.Component {
         )
     });
 
+    getProfileData = async () => {
+        const { firebase } = getFirebaseClient();
+        const user = firebase.auth();
+        await getDatabase(`users/${user.currentUser.uid}`, (data) => {
+            this.setState({image : data.avatar});
+            this.setState({loading : false});
+        })
+    };
+
     componentDidMount() {
         this.getPermissionAsync().then(r => {
 
         });
+
+        this.getProfileData();
         const uid = this.props.navigation.getParam('uid');
         this.setState({
             userId: uid
