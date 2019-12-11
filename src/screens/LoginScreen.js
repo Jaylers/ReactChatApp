@@ -4,8 +4,6 @@ import Container from '../components/Container'
 import login from '../libs/firebase/login'
 import onAuthStateChanged from '../libs/firebase/onAuthStateChanged'
 import styles from '../styles/layout'
-import { pushNotificationToken } from '../libs/notification'
-import setDatabase from "../libs/firebase/setDatabase";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -20,14 +18,12 @@ class LoginScreen extends React.Component {
     };
 
     login= async () => {
-        const token = await pushNotificationToken();
         this.setState({ loading: true });
         const { email, password } = this.state;
         if (email && password){
             login(email, password)
                 .then((data) => {
                     console.log("loged in");
-                    setDatabase('users/' + data.uid + '/pushToken', token);
                     this.props.navigation.replace('ChatRoom')
                 })
                 .catch(() => {
