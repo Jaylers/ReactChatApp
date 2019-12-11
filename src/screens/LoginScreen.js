@@ -54,7 +54,7 @@ class LoginScreen extends React.Component {
         return (
             <Container loading={this.state.authLoading} >
                 <View style={styles.container} >
-                    <Image source={require('../../assets/logo.png')} />
+                    <Image style={styles.imgLogin} source={require('../../assets/logo.png')} />
                     <Text style={styles.text}>Chat app</Text>
                     <TextInput
                         autoCapitalize='none'

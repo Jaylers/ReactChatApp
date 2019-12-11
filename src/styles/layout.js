@@ -28,5 +28,9 @@ export default StyleSheet.create({
         borderRadius: 25,
         minWidth : 100,
         width : 55
+    },
+    imgLogin : {
+        width : 200,
+        height : 200
     }
 })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, SafeAreaView, StyleSheet, TextInput, Button } from 'react-native'
+import {View, SafeAreaView, StyleSheet, TextInput, Button, Image} from 'react-native'
 import Container from '../components/Container'
 import register from '../libs/firebase/register'
 import setDatabase from '../libs/firebase/setDatabase'
@@ -44,6 +44,8 @@ class RegisterScreen extends React.Component {
     return (
         <Container loading={this.state.authLoading}>
         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Image style={styles.imgReg} source={require('../../assets/logo.png')} />
+
             <TextInput
             style={styles.input}
             value={this.state.name}
@@ -93,6 +95,11 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
     fontSize: 13,
   },
+    imgReg : {
+        width : 200,
+        height : 200,
+        marginBottom : 52
+    }
 });
 
 
