@@ -2,10 +2,10 @@ import * as firebase from 'firebase';
 
 let initFirebase;
 const firebaseConfig = {
-  apiKey: "AIzaSyCRIrsbOmaxtCoIy_l0bIc3gmYWVObHEkE",
-  authDomain: "igg-chat-app.firebaseio.com",
-  databaseURL: "https://igg-chat-app-f3c73.firebaseio.com",
-  storageBucket: "igg-chat-app-f3c73.appspot.com"
+  apiKey: "AIzaSyD-CTTeR8a5vACJ4rrw8LkYQ87a3jIvGE4",
+  authDomain: "reactchatapp-2d509.firebaseio.com",
+  databaseURL: "https://reactchatapp-2d509.firebaseio.com",
+  storageBucket: "reactchatapp-2d509.appspot.com"
 };
 
 const getClient = () => {
