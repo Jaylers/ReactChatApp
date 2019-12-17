@@ -35,7 +35,7 @@ class ChatRoomScreen extends React.Component {
                         routeName: 'AddFriend'
                     })
                 }}>
-                <View style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center', marginEnd : 10}}>
                     <Ionicons name="md-person-add" size={32} color="#508deb" />
                 </View>
             </TouchableOpacity>
