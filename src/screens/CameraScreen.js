@@ -65,8 +65,7 @@ export default class CameraScreen extends Component {
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <TouchableOpacity
                         title="Open Camera"
-                        onPress={this.snap}
-                    >
+                        onPress={this.snap}>
                         <View style={{width: 60, height: 60, backgroundColor: '#606060', alignItems: 'center', justifyContent: 'center', borderRadius: 30, margin: 10}}>
                             <Ionicons name="md-camera" size={32} color="#fff" />
                         </View>

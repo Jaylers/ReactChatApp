@@ -10,6 +10,7 @@ import logout from "../libs/firebase/logout";
 import getClient from "../libs/firebase/getClient";
 import getDatabase from "../libs/firebase/getDatabase";
 import getFirebaseClient from '../libs/firebase/getClient'
+import styles from "../styles/layout";
 
 class ProfileScreen extends React.Component {
 
@@ -17,6 +18,7 @@ class ProfileScreen extends React.Component {
         image: null,
         hasCameraPermission: false,
         userId: null,
+        name : null,
         authLoading: false
     };
 
@@ -39,7 +41,7 @@ class ProfileScreen extends React.Component {
                         console.log(error)
                     })
                 }}>
-                <Text style={{color:'#508deb'}}>Sign out</Text>
+                <Text style={{color:'#508deb', marginEnd : 10}}>Sign out</Text>
             </TouchableOpacity>
         )
     });
@@ -49,6 +51,7 @@ class ProfileScreen extends React.Component {
         const user = firebase.auth();
         await getDatabase(`users/${user.currentUser.uid}`, (data) => {
             this.setState({image : data.avatar});
+            this.setState({name : data.name});
             this.setState({loading : false});
         })
     };
@@ -110,7 +113,7 @@ class ProfileScreen extends React.Component {
         return (
             <Container loading={this.state.authLoading} >
                 <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, marginTop: 30, marginBottom: 10 }}>เลือกรูปโปรไฟล์</Text>
+                    <Text style={{ fontSize: 20, marginTop: 30, marginBottom: 20 }}>สวัสดี {this.state.name? this.state.name : "Unknown"}</Text>
                     <Image
                         style={{ width: 250, height: 250, borderRadius: 125, marginVertical: 20 }}
                         source={ image == null ? require('../../assets/placeholderAvatar.png') : {uri: image} } />
@@ -118,8 +121,7 @@ class ProfileScreen extends React.Component {
                     <View style={{flexDirection: 'row', marginBottom: 50}}>
                         <TouchableOpacity
                             title="Open Camera Roll"
-                            onPress={this._pickImage}
-                        >
+                            onPress={this._pickImage}>
                             <View style={{width: 60, height: 60, backgroundColor: '#606060', alignItems: 'center', justifyContent: 'center', borderRadius: 30, margin: 10}}>
                                 <Ionicons name="md-images" size={32} color="#fff" />
                             </View>
@@ -128,14 +130,17 @@ class ProfileScreen extends React.Component {
                         <TouchableOpacity
                             title="Open Camera"
                             onPress={() => this.props.navigation.navigate('Camera', { onTakePhoto: this.onTakePhoto })}>
-
                             <View style={{width: 60, height: 60, backgroundColor: '#606060', alignItems: 'center', justifyContent: 'center', borderRadius: 30, margin: 10}}>
                                 <Ionicons name="md-camera" size={32} color="#fff" />
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <Button title="Save" onPress={this.saveImage} />
+                    <TouchableOpacity
+                        title="Save"
+                        onPress={this.saveImage}>
+                        <Text style={styles.buttonCute}>Save</Text>
+                    </TouchableOpacity>
                 </SafeAreaView>
             </Container>
         )
