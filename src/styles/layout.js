@@ -13,8 +13,11 @@ export default StyleSheet.create({
     input: {
         borderColor: 'gray',
         borderWidth: 1,
-        borderRadius: 8,
-        padding: 5,
+        borderRadius: 18,
+        paddingEnd : 5,
+        paddingTop : 5,
+        paddingBottom : 5,
+        paddingStart: 18,
         width: '60%',
         height: 40,
         marginBottom: 10,
@@ -24,13 +27,24 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
-    buttonCute : {
+    buttonPos: {
+        borderWidth: 1,
         borderRadius: 25,
         minWidth : 100,
-        width : 55
+        width : 100,
+        padding : 8,
+    },
+    buttonCute: {
+        textAlign : 'center',
+        borderWidth: 1,
+        borderRadius: 25,
+        minWidth : 100,
+        width : 100,
+        padding : 8,
+        color : 'green'
     },
     imgLogin : {
-        width : 200,
-        height : 200
+        width : 180,
+        height : 180
     }
 })

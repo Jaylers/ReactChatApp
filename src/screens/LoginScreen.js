@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Image, Text, StyleSheet, Button, TextInput } from 'react-native'
+import {
+    View,
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Platform,
+    KeyboardAvoidingView
+} from 'react-native'
 import Container from '../components/Container'
 import login from '../libs/firebase/login'
 import onAuthStateChanged from '../libs/firebase/onAuthStateChanged'
@@ -21,9 +29,9 @@ class LoginScreen extends React.Component {
         this.setState({ loading: true });
         const { email, password } = this.state;
         if (email && password){
-            login(email, password)
+            login(email.trim(), password.trim())
                 .then((data) => {
-                    console.log("loged in");
+                    console.log("logged in");
                     this.props.navigation.replace('ChatRoom')
                 })
                 .catch(() => {
@@ -32,6 +40,7 @@ class LoginScreen extends React.Component {
                 })
         } else {
             alert('Required username and password');
+            this.setState({ loading: false })
         }
     };
 
@@ -49,28 +58,50 @@ class LoginScreen extends React.Component {
     render() {
         return (
             <Container loading={this.state.authLoading} >
-                <View style={styles.container} >
-                    <Image style={styles.imgLogin} source={require('../../assets/logo.png')} />
-                    <Text style={styles.text}>Chat app</Text>
-                    <TextInput
-                        autoCapitalize='none'
-                        style={styles.input}
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.password}
-                        onChangeText={(password) => this.setState({ password })}
-                        secureTextEntry />
-                    {this.state.loading ? <Text>Loading...</Text> :
-                        <View style={styles.buttonLayout} >
-                            <Button title="Login" onPress={this.login} style={styles.buttonCute}/>
-                            <View style={{ width: 10 }} />
-                            <Button title="Register" style={styles.buttonCute} onPress={() => { this.props.navigation.navigate('Register') }} />
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior="padding"
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 100}>
+                    {
+                        <View style={styles.container} >
+                            <Image style={styles.imgLogin} source={require('../../assets/logo.png')} />
+                            <Text style={styles.text}>Chat App</Text>
+                            <TextInput
+                                autoCapitalize='none'
+                                autoCompleteType="email"
+                                style={styles.input}
+                                value={this.state.email}
+                                placeholder="email"
+                                onChangeText={(email) => this.setState({ email })}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                value={this.state.password}
+                                autoCompleteType="off"
+                                placeholder="password"
+                                onChangeText={(password) => this.setState({ password })}
+                                secureTextEntry />
+
+                            <View style={{ width: 1000, marginBottom : 18 }} />
+
+                            {this.state.loading ? <Text>Loading...</Text> :
+                                <View style={styles.buttonLayout} >
+                                    <TouchableOpacity
+                                        title="Login"
+                                        onPress={this.login}>
+                                        <Text style={styles.buttonCute}>Login</Text>
+                                    </TouchableOpacity>
+                                    <View style={{ width: 10, marginBottom : 18 }} />
+                                    <TouchableOpacity
+                                        title="Register"
+                                        onPress={() => { this.props.navigation.navigate('Register') }}>
+                                        <Text style={styles.buttonCute}>Register</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            }
                         </View>
                     }
-                </View>
+                </KeyboardAvoidingView>
             </Container>
         )
     }
